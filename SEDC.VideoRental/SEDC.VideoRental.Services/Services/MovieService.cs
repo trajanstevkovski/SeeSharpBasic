@@ -102,6 +102,12 @@ namespace SEDC.VideoRental.Services.Services
             var movie = _movieRepository.GetMovieById(idSelected);
             if (movie != null)
             {
+                var listOfRentedMovieIds = user.RentedMovies.Select(rental => rental.Movie.Id).ToList();
+                if (listOfRentedMovieIds.Contains(idSelected))
+                {
+                    throw new Exception($"Already rented {movie.Title} please return it first");
+                }
+
                 if (!movie.IsAvailable)
                 {
                     throw new Exception($"Movie {movie.Title} is not available at the moment.");
