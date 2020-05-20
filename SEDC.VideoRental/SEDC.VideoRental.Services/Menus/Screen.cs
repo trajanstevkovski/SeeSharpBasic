@@ -76,7 +76,10 @@ namespace SEDC.VideoRental.Services.Menus
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.BackgroundColor = ConsoleColor.White;
-            Console.WriteLine(errorMessage);
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            { 
+                Console.WriteLine(errorMessage);
+            }
             Console.ResetColor();
         }
 

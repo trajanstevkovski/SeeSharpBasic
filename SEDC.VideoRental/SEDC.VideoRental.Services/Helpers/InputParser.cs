@@ -103,7 +103,7 @@ namespace SEDC.VideoRental.Services.Helpers
 					coutner++;
 				}
 				var genreSelection = ToInteger(1, Enum.GetNames(typeof(Genre)).Length);
-				var isValid = Enum.TryParse(typeof(Genre), (genreSelection + 1).ToString(), out var genre);
+				var isValid = Enum.TryParse(typeof(Genre), (genreSelection - 1).ToString(), out var genre);
 
 				if (isValid)
 				{
