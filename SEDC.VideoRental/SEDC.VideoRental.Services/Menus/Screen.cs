@@ -55,6 +55,14 @@ namespace SEDC.VideoRental.Services.Menus
             Console.WriteLine("0. Go back");
         }
 
+        public static void ShowPromotion(string promoString)
+        {
+            if (!string.IsNullOrWhiteSpace(promoString))
+            {
+                Console.Write($"Prmotion: {promoString}");
+            }
+        }
+
         public static void ClearScreen()
         {
             Console.Clear();

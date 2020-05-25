@@ -11,6 +11,9 @@ namespace SEDC.VideoRental.Data.Models
         // card number is used as a username
         public int CardNumber { get; set; }
         public bool IsSubscriptionExpired { get; set; }
+        public DateTime SubscriptionExpireTime { get; set; }
+
+        public bool IsSubscribedForPromotions { get; set; }
         
         // TODO: PART 3
         public List<RentalInfo> RentedMovies { get; set; }

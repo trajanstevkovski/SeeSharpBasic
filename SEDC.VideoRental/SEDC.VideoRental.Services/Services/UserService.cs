@@ -28,6 +28,7 @@ namespace SEDC.VideoRental.Services.Services
 
                 if(user != null)
                 {
+                    RenewSubsctription(user);
                     Console.WriteLine($"Welcome {user.FullName}");
                     return user;
                 }
@@ -80,6 +81,32 @@ namespace SEDC.VideoRental.Services.Services
             }
             while (takenCardNumbers.Contains(cardNumber));
             return cardNumber;
+        }
+
+        private void RenewSubsctription(User user)
+        {
+            if(user.SubscriptionExpireTime < DateTime.Now)
+            {
+                user.IsSubscriptionExpired = true;
+            }
+
+            if (user.IsSubscriptionExpired)
+            {
+                Console.WriteLine("Your subscription is expired. Do you want to renew y/n");
+                bool renew = InputParser.ToConfirm();
+                LoadingHelpers.ShowSimplePercentage();
+                
+                if(!renew)
+                {
+                    Console.WriteLine("Thank you for using Video rental.");
+                    Thread.Sleep(2000);
+                    Environment.Exit(0);
+                }
+
+                user.IsSubscriptionExpired = false;
+                user.SubscriptionExpireTime = DateTime.Now.AddDays(7);
+                Console.WriteLine($"Your subscription is extended untill {user.SubscriptionExpireTime.ToShortDateString()}");
+            }
         }
     }
 }

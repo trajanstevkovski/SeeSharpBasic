@@ -1,6 +1,7 @@
 ﻿using SEDC.VideoRental.App.Menus;
 using SEDC.VideoRental.Data.Models;
 using SEDC.VideoRental.Services.Helpers;
+using SEDC.VideoRental.Services.Loaders;
 using SEDC.VideoRental.Services.Menus;
 using SEDC.VideoRental.Services.Services;
 using System;
@@ -16,6 +17,7 @@ namespace SEDC.VideoRental.App
             // global variable that we will reuse thru the application
             var userService = new UserService();
             var movieService = new MovieService();
+            var promotionService = new PromotionService();
             User user = null;
             string errorMessage = string.Empty;
 
@@ -49,6 +51,20 @@ namespace SEDC.VideoRental.App
             }
             #endregion
 
+            #region NewsLetter
+            // Ask if user if he want to get news letter
+            if (!user.IsSubscribedForPromotions)
+            {
+                Console.WriteLine("Do you want to subscribe to newsletter? y/n");
+                bool isSubscribed = InputParser.ToConfirm();
+                if (isSubscribed)
+                {
+                    user.IsSubscribedForPromotions = true;
+                    LoadingHelpers.ShowSimplePercentage();
+                    Console.WriteLine("Thank you for subscribing!");
+                }
+            }
+            #endregion
 
             #region ViewSection
 
@@ -58,6 +74,10 @@ namespace SEDC.VideoRental.App
                 Screen.ClearScreen();
                 Screen.ErrorMessage(errorMessage);
                 Screen.MainMenu(user.FullName);
+                if (user.IsSubscribedForPromotions)
+                {
+                    Screen.ShowPromotion(promotionService.GetPromotion());
+                }
                 var selection = InputParser.ToInteger(1, 4);
                 switch (selection)
                 {
